@@ -11,7 +11,7 @@ export class Embed {
 		})
 	}
 
-	public static SuccessEmbed(text: string, title: string = "✔ Succès", fields: EmbedFieldData[] = []): MessageEmbed {
+	public static SuccessEmbed(text: string, title = "✔ Succès", fields: EmbedFieldData[] = []): MessageEmbed {
 		return new MessageEmbed({
 			color : "#1A960A",
 			title : title,
@@ -20,7 +20,7 @@ export class Embed {
 		})
 	}
 
-	public static ErrorEmbed(reason: string, title:string = "❌ Erreur"): MessageEmbed {
+	public static ErrorEmbed(reason: string, title = "❌ Erreur"): MessageEmbed {
 		return new MessageEmbed({
 			color : "#960A0A",
 			title : title,
@@ -35,7 +35,7 @@ export class Embed {
 		})
 	}
 
-	public static WarningEmbed(reason: string, title:string = "⚠ Attention", fields: EmbedFieldData[] = []): MessageEmbed {
+	public static WarningEmbed(reason: string, title = "⚠ Attention", fields: EmbedFieldData[] = []): MessageEmbed {
 		return new MessageEmbed({
 			color : "#FFBB00",
 			title : title,

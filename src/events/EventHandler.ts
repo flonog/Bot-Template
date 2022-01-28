@@ -7,7 +7,7 @@ export class EventHandler{
 	public RegisterEvent(event : IEvent): void{
 		console.log(`Registered ${event.name} (${event.action}.)`)
 		this.events.push(event);
-		var client = DiscordClient.GetSingleton().GetClient();
+		const client = DiscordClient.GetSingleton().GetClient();
 		client?.on(event.action, event.OnEventFired.bind(null, client))
 	}
 }
