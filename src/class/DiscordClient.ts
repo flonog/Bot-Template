@@ -1,8 +1,7 @@
 import {CommandHandler} from "./command/CommandHandler";
-import * as DiscordJs from "discord.js";
 import { EventHandler } from "./events/EventHandler";
 import { CommandEvent } from "./command/CommandEvent";
-import * as Config from "./config.json";
+import { Client } from "discord.js";
 
 export class DiscordClient {
 
@@ -13,7 +12,7 @@ export class DiscordClient {
     private static singleton: DiscordClient;
     private commandHandler: CommandHandler;
     private eventHandler: EventHandler;
-    private client: DiscordJs.Client | undefined;
+    private client: Client | undefined;
 
     constructor() {
         DiscordClient.singleton = this;
@@ -21,7 +20,7 @@ export class DiscordClient {
         this.commandHandler = new CommandHandler();
     }
 
-    public GetClient() : DiscordJs.Client | undefined{
+    public GetClient() : Client | undefined{
         return this.client;
     }
 
@@ -35,5 +34,15 @@ export class DiscordClient {
 
     private RegisterHandlers(){
         this.eventHandler.RegisterEvent(new CommandEvent());
+    }
+
+    public Login(token: string): void {
+        this.client = new Client({intents : "GUILDS"});
+        this.client.login(token).then(() => {
+            console.log("Launched successfuly")
+        }).catch((err) => {
+            console.log(err);
+        });
+        this.RegisterHandlers();
     }
 }
