@@ -26,7 +26,7 @@ export class DiscordClient {
     }
 
     public GetToken(): string {
-        throw new Error("Method not implemented.");
+        return this.token;
     }
 
     public GetCommandHandler(): CommandHandler{

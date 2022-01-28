@@ -4,11 +4,14 @@ import {IEvent} from "../events/Event";
 
 export class CommandEvent implements IEvent {
 
-	action = "message";
+	action = "interactionCreate";
 	name = "CommandHandler";
 
 	OnEventFired(client: Client, interaction : CommandInteraction): void {
 		
+		if(!interaction.isCommand)
+			return;
+
 		const commandHandler = DiscordClient.GetSingleton().GetCommandHandler();
 		
 		const command = commandHandler.commands.find((command) => {

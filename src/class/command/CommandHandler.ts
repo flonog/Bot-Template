@@ -14,11 +14,14 @@ export class CommandHandler {
         let slashBuilders = [];
 
         this.commands.forEach(element => {
-            slashBuilders.push(element.slashBuilder.toJSON);
+            slashBuilders.push(element.slashBuilder.toJSON());
         });
 
-        rest.put(Routes.applicationGuildCommands("", ""), {body : slashBuilders}).then((res) => {
-            console.log(res)
+        // console.log(slashBuilders)
+        let client = DiscordClient.GetSingleton().GetClient();
+        
+        rest.put(Routes.applicationGuildCommands(client.user.id, "GUILD ID"), {body : slashBuilders}).then((res) => {
+            console.log(`Command registered successfully (${slashBuilders.length})`)
         }).catch((err) => {
             console.log(err)
         });
