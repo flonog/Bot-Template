@@ -1,8 +1,7 @@
 import {CommandHandler} from "./command/CommandHandler";
-import * as DiscordJs from "discord.js";
 import { EventHandler } from "./events/EventHandler";
 import { CommandEvent } from "./command/CommandEvent";
-import * as Config from "./config.json";
+import { Client } from "discord.js";
 
 export class DiscordClient {
 
@@ -13,7 +12,8 @@ export class DiscordClient {
     private static singleton: DiscordClient;
     private commandHandler: CommandHandler;
     private eventHandler: EventHandler;
-    private client: DiscordJs.Client | undefined;
+    private client: Client | undefined;
+    private token: string;
 
     constructor() {
         DiscordClient.singleton = this;
@@ -21,8 +21,12 @@ export class DiscordClient {
         this.commandHandler = new CommandHandler();
     }
 
-    public GetClient() : DiscordJs.Client | undefined{
+    public GetClient() : Client | undefined{
         return this.client;
+    }
+
+    public GetToken(): string {
+        throw new Error("Method not implemented.");
     }
 
     public GetCommandHandler(): CommandHandler{
@@ -35,5 +39,17 @@ export class DiscordClient {
 
     private RegisterHandlers(){
         this.eventHandler.RegisterEvent(new CommandEvent());
+    }
+
+    public Login(token: string): void {
+        this.client = new Client({ intents : "GUILDS" });
+        this.client.login(token).then(() => {
+            console.log("Launched successfuly")
+            this.token = token;
+            this.RegisterHandlers();
+            this.commandHandler.SendCommandsToRest();
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 }

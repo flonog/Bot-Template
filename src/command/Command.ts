@@ -1,9 +1,9 @@
-import { Message } from "discord.js";
+import { CommandInteraction } from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 export interface ICommand {
     commandName: string;
-    aliases: string[];
-    description: string;
+    slashBuilder: SlashCommandBuilder;
 
-    OnCommandExecute(message : Message, args : string[]): void;
+    OnCommandExecute(interaction : CommandInteraction): void;
 }
